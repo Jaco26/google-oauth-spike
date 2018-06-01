@@ -1,8 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 require('dotenv').config();
+// require passportSetup
+const passportSetup = require('./config/passport-setup');
+
 // require routes
 const authRoutes = require('./routes/auth-routes');
+
 
 const app = express();
 
@@ -13,7 +17,7 @@ app.use(express.static('dist'));
 
 
 // use routes
-app.use('/auth', authRoutes)
+app.use('/api/auth', authRoutes)
 
 
 

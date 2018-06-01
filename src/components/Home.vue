@@ -2,6 +2,7 @@
   <div>
     <h1 v-if="!message">Welcome {{user.name}}</h1>
     <h1 v-else> {{message}} </h1>
+    <button @click="login">Login</button>
   </div>
 </template>
 
@@ -27,6 +28,13 @@ export default {
           this.message = 'Uh oh! Bad news!'
           console.log(err)
         });
+    },
+    login () {
+      axios.get('/api/auth/google')
+        .then(response => {
+          console.log(response);
+          
+        })
     }
   },
   created () {
