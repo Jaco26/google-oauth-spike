@@ -17,29 +17,19 @@ export default {
     }
   },
   methods: {
-    getUser () {
-      axios.get('/api/1')
-        .then(response => {
-          // console.log(response.data[0]);
-          this.user = response.data[0];
-          this.message = '';
-        })
-        .catch(err => {
-          this.message = 'Uh oh! Bad news!'
-          console.log(err)
-        });
-    },
     login () {
       axios.get('/api/auth/google')
         .then(response => {
           console.log(response);
           
         })
+        .catch(err => {
+          console.log(err);
+          
+        })
     }
   },
-  created () {
-    this.getUser()
-  },
+
 
 
 }

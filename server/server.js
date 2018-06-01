@@ -1,43 +1,35 @@
 const express = require('express');
+const app = express();
 const bodyParser = require('body-parser');
 require('dotenv').config();
-// require passportSetup
-const passportSetup = require('./config/passport-setup');
+const passport = require('./strategies/google.strategy');
+const sessionConfig = require('./modules/session-middleware');
 
-// require routes
-const authRoutes = require('./routes/auth-routes');
+// Passport Session Config
+app.use(sessionConfig);
 
+// Start up passport sessions
+app.use(passport.initialize());
+app.use(passport.session());
 
-const app = express();
+const PORT = process.env.PORT || 8081;
+app.listen(PORT, () => {
+  console.log('Server listening on port:', PORT);
+});
 
+// Body parser middleware
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
 
+// Serve static files
 app.use(express.static('dist'));
 
+// Route includes
+const authRouter = require('./routes/auth-routes');
 
-// use routes
-app.use('/api/auth', authRoutes)
-
-
-
-
-
-const users = [
-  {name: 'Jacob', id: 1}
-];
-
-app.get('/api/:id', (req, res) => {
-  console.log('*************************************',req.params.id);
-  
-  let user = users.filter(user => user.id == req.params.id);
-  res.send(user);
-})
+/** Routes */
+app.use('/api/auth', authRouter)
 
 
 
 
-const port = process.env.PORT || 8081;
-app.listen(port, () => {
-  console.log('Server listening on port:', port);
-});

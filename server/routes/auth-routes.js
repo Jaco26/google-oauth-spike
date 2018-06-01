@@ -3,7 +3,25 @@ const passport = require('passport');
 
 // auth login
 router.get('/login', (req, res) => {
-
+  console.log('************** REQ.USER ***************', req.user);
+  
+  // if (req.session.token) {
+  //   res.cookie('token', req.session.token);
+  //   res.json({
+  //     status: 'session cookie set'
+  //   });
+  // } else {
+  //   res.cookie('token', '');
+  //   res.json({
+  //     status: 'session cookie not set'
+  //   }) 
+  // }
+  
+  // if(req.isAuthenticated()) {
+  //   res.send(req.user);
+  // } else {
+  //   res.sendStatus(403);
+  // }
 });
 
 // auth logout
@@ -18,10 +36,11 @@ router.get('/google', passport.authenticate('google', {
 }));
 
 // callback route for google to redirect to
-router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-  console.log('************** THIS IS THE CALLBACK URI!!!');
-  
-  res.send('You reached the callback URI!')
+router.get('/google/redirect', 
+  passport.authenticate('google', {failureRedirect: '/login'}), 
+  (req, res) => {
+    req.session.token = req.user.token;
+    res.redirect('/')
 })
 
 
