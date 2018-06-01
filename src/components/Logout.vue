@@ -1,7 +1,6 @@
 <template>
   <div>
-    <h1>The Login Page</h1>
-
+    <h1>The Logout Page</h1>
   </div>
 </template>
 
@@ -10,10 +9,12 @@ import axios from 'axios';
 export default {
   data () {
     return {
-      message: '',
+      message
     }
   },
-  
+  beforeRouteEnter (to, from, next) {
+
+  }
 }
 </script>
 

@@ -31,7 +31,8 @@ export default {
   },
   created () {
     this.getUser()
-  }
+  },
+
 
 }
 </script>
